@@ -54,7 +54,7 @@ export default {
         if (this.searchTerm.query !== "") {
           try {
             const response = await axios.get(
-              `http://api.weatherapi.com/v1/search.json?key=76b3773717d94886a7b82725241102&q=${this.searchTerm.query}`
+              `https://api.weatherapi.com/v1/search.json?key=76b3773717d94886a7b82725241102&q=${this.searchTerm.query}`
             );
 
             this.searchTerm.results = response.data;
@@ -72,7 +72,7 @@ export default {
     async getWeather(url) {
       try {
         const response = await axios.get(
-          `http://api.weatherapi.com/v1/forecast.json?key=76b3773717d94886a7b82725241102&q=${url}&days=3&aqi=no&alerts=no`
+          `https://api.weatherapi.com/v1/forecast.json?key=76b3773717d94886a7b82725241102&q=${url}&days=3&aqi=no&alerts=no`
         );
 
         this.$emit("place-data", response.data);
