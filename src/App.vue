@@ -1,31 +1,3 @@
-<script>
-import SearchInput from "./components/SearchInput.vue";
-import WeatherCard from "./components/WeatherCard.vue";
-
-export default {
-  data() {
-    return {
-      places: [],
-    };
-  },
-  methods: {
-    addPlace(data) {
-      this.places.push(data);
-      console.log(this.places);
-    },
-    deletePlace(name) {
-      if (confirm("Are you sure")) {
-        this.places = this.places.filter((p) => p.location.name !== name);
-      }
-    },
-  },
-  components: {
-    SearchInput,
-    WeatherCard,
-  },
-};
-</script>
-
 <template>
   <main>
     <!-- Current date -->
@@ -53,3 +25,24 @@ export default {
     </div>
   </main>
 </template>
+
+<script setup>
+import { onMounted } from "vue";
+import SearchInput from "./components/SearchInput.vue";
+import WeatherCard from "./components/WeatherCard.vue";
+import { usePlacesStore } from "./store/store";
+import { storeToRefs } from "pinia";
+
+onMounted(() => {
+  if (!places.value[0]) {
+    const historyPlaces = JSON.parse(localStorage.getItem("Places"));
+    console.log(historyPlaces);
+    for (let place in historyPlaces) {
+      addPlace(historyPlaces[place]);
+    }
+  }
+});
+
+const { addPlace, deletePlace } = usePlacesStore();
+const { places } = storeToRefs(usePlacesStore());
+</script>
